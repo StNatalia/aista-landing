@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AISTA — Резюме для роботи у Бельгії</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1B3A6B;
+  --navy-deep: #0F2244;
+  --blue: #2563EB;
+  --blue-light: #EFF6FF;
+  --gold: #F59E0B;
+  --gold-dark: #D97706;
+  --gold-light: #FFFBEB;
+  --white: #FFFFFF;
+  --gray-bg: #F8F9FB;
+  --gray-border: #E5E7EB;
+  --text: #111827;
+  --text-mid: #374151;
+  --text-light: #6B7280;
+  --red-bg: #FEF2F2;
+  --red-border: #FECACA;
+  --red-text: #991B1B;
+  --red-icon: #DC2626;
+  --green-bg: #F0FDF4;
+  --green-border: #BBF7D0;
+  --green-text: #14532D;
+  --green-icon: #16A34A;
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 6px 20px rgba(0,0,0,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;line-height:1.6}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:700;line-height:1.2}
+
+/* ── ANNOUNCEMENT ── */
+.announce{background:var(--gold);color:#1a1a1a;text-align:center;padding:10px 20px;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:.5px}
+
+/* ── HEADER ── */
+.hdr{background:var(--navy-deep);padding:18px 20px;text-align:center}
+.logo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:30px;color:#fff;letter-spacing:5px}
+.logo span{color:var(--gold)}
+.logo-sub{color:rgba(255,255,255,.5);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(150deg,#0a1e3d 0%,#1B3A6B 55%,#1e4d94 100%);padding:64px 20px 52px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:600px;height:120px;background:radial-gradient(ellipse,rgba(245,158,11,.12) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:var(--gold);font-size:13px;font-weight:700;padding:6px 18px;border-radius:50px;margin-bottom:26px;font-family:'Montserrat',sans-serif;letter-spacing:.5px}
+.hero h1{font-size:clamp(24px,5vw,42px);color:#fff;margin-bottom:22px;max-width:680px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{color:rgba(255,255,255,.82);font-size:clamp(15px,2.5vw,18px);max-width:580px;margin:0 auto 26px;line-height:1.75}
+.hero-promise{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:var(--r-md);padding:20px 24px;max-width:560px;margin:0 auto 30px;color:rgba(255,255,255,.88);font-size:16px;line-height:1.75}
+.hero-promise strong{color:var(--gold)}
+.price-row{margin-bottom:26px}
+.price-old{font-size:18px;color:rgba(255,255,255,.45);text-decoration:line-through;font-family:'Montserrat',sans-serif}
+.price-arr{color:rgba(255,255,255,.35);margin:0 8px}
+.price-new{font-size:38px;font-weight:900;color:var(--gold);font-family:'Montserrat',sans-serif}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1a1a1a;font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(13px,2vw,16px);padding:18px 36px;border-radius:50px;text-decoration:none;cursor:pointer;border:none;box-shadow:0 4px 24px rgba(245,158,11,.45);transition:transform .18s,box-shadow .18s;letter-spacing:.3px;line-height:1.3;text-align:center}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,158,11,.55)}
+.ps{color:rgba(255,255,255,.52);font-size:13px;margin-top:14px}
+.bonuses{margin-top:22px;display:flex;flex-direction:column;gap:8px;align-items:stretch;max-width:320px;margin-left:auto;margin-right:auto}
+.bonus-row{color:rgba(255,255,255,.82);font-size:14px;display:flex;align-items:flex-start;gap:9px;text-align:left}
+.bonus-header{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.bonus-num{background:var(--gold);color:#1a1a1a;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0;font-family:'Montserrat',sans-serif}
+
+/* ── TIMER ── */
+.timer-wrap{background:#0d1f3c;padding:28px 20px;text-align:center}
+.timer-lbl{color:rgba(255,255,255,.6);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-family:'Montserrat',sans-serif}
+.timer{display:flex;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.tu{display:flex;flex-direction:column;align-items:center;gap:5px}
+.td{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);color:#fff;font-family:'Montserrat',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:900;width:clamp(68px,14vw,88px);height:clamp(68px,14vw,88px);display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm)}
+.tl{color:rgba(255,255,255,.45);font-size:11px;letter-spacing:1px;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.timer-note{color:rgba(255,255,255,.55);font-size:14px}
+.timer-note strong{color:var(--gold)}
+
+/* ── SECTION BASE ── */
+.sec{padding:60px 20px}
+.sec-alt{background:var(--gray-bg)}
+.wrap{max-width:740px;margin:0 auto}
+.tag{display:inline-block;background:var(--blue-light);color:var(--blue);font-size:11px;font-weight:700;padding:5px 13px;border-radius:50px;margin-bottom:10px;font-family:'Montserrat',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.sec-h{font-size:clamp(20px,4vw,30px);color:var(--text);margin-bottom:6px}
+.sec-sub{color:var(--text-mid);font-size:15px;margin-bottom:36px}
+.divider{height:1px;background:var(--gray-border)}
+
+/* ── PRINCIPLES ── */
+.cards{display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border:1px solid var(--gray-border);border-radius:var(--r-md);padding:22px;display:flex;gap:14px;box-shadow:var(--shadow)}
+.card-icon{width:42px;height:42px;background:var(--blue-light);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.card-t{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:5px}
+.card-d{color:var(--text-mid);font-size:14px;line-height:1.6}
+
+/* ── BONUSES ── */
+.bcard{background:#fff;border:1px solid var(--gray-border);border-radius:var(--r-md);padding:18px 22px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.bnum{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bt{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--text);margin-bottom:3px}
+.bd{color:var(--text-mid);font-size:13px;line-height:1.5}
+
+/* ── PAIN ── */
+.pain-card{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--r-md);padding:18px 22px;display:flex;gap:13px;align-items:flex-start}
+.pain-x{width:26px;height:26px;background:var(--red-icon);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px}
+.pt{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--red-text);margin-bottom:4px}
+.pd{color:#7f1d1d;font-size:13px;line-height:1.55;opacity:.88}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:22px}
+.step{display:flex;gap:15px;align-items:flex-start}
+.snum{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:18px;flex-shrink:0}
+.snum-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#1a1a1a;box-shadow:0 2px 10px rgba(245,158,11,.3)}
+.snum-blue{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;box-shadow:0 2px 10px rgba(37,99,235,.25)}
+.step-body{padding-top:8px}
+.st{font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--text);margin-bottom:4px}
+.sd{color:var(--text-mid);font-size:14px;line-height:1.65}
+.sd em{font-style:italic;color:var(--text-light)}
+
+/* ── MID CTA ── */
+.mid-cta{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:40px 20px;text-align:center}
+
+/* ── AUTHOR ── */
+.author-box{background:#fff;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+.author-top{background:linear-gradient(135deg,var(--navy-deep),var(--navy));padding:28px 24px;display:flex;align-items:center;gap:18px}
+.ava{width:76px;height:76px;background:rgba(245,158,11,.18);border:3px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:26px;color:var(--gold);flex-shrink:0}
+.aname{color:#fff;font-size:21px;font-family:'Montserrat',sans-serif;font-weight:700}
+.atitle{color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:3px;font-family:'Montserrat',sans-serif}
+.astats{display:flex;background:var(--gray-bg);border-bottom:1px solid var(--gray-border)}
+.astat{flex:1;padding:14px 10px;text-align:center;border-right:1px solid var(--gray-border)}
+.astat:last-child{border-right:none}
+.asn{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:var(--navy)}
+.asl{font-size:11px;color:var(--text-light);line-height:1.3;margin-top:2px}
+.abio{padding:24px;color:var(--text-mid);font-size:15px;line-height:1.75}
+.abio p+p{margin-top:12px}
+
+/* ── CHECKLIST ── */
+.chk{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.chk-row{display:flex;align-items:center;gap:11px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--r-sm);padding:13px 16px}
+.chk-icon{width:22px;height:22px;background:var(--green-icon);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.chk-t{color:var(--green-text);font-weight:500;font-size:15px}
+.cmp-note{background:var(--blue-light);border-radius:var(--r-md);padding:18px;text-align:center;color:var(--blue);font-size:15px;font-weight:500;line-height:1.6}
+
+/* ── BEFORE/AFTER ── */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ba-b{background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--r-md);padding:18px}
+.ba-a{background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--r-md);padding:18px}
+.ba-hdr{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;padding-bottom:9px;border-bottom:2px solid}
+.ba-b .ba-hdr{color:var(--red-icon);border-color:var(--red-border)}
+.ba-a .ba-hdr{color:var(--green-icon);border-color:var(--green-border)}
+.ba-row{font-size:13px;margin-bottom:9px;line-height:1.4;display:flex;gap:6px;align-items:flex-start}
+.ba-b .ba-row{color:#7f1d1d}
+.ba-a .ba-row{color:var(--green-text)}
+@media(max-width:480px){.ba{grid-template-columns:1fr}}
+
+/* ── TESTIMONIALS ── */
+.tc{background:#fff;border:1px solid var(--gray-border);border-radius:var(--r-md);padding:22px;box-shadow:var(--shadow)}
+.tc-top{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.tc-ava{width:42px;height:42px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tc-name{font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--text)}
+.tc-role{font-size:12px;color:var(--text-light);margin-top:1px}
+.stars{color:var(--gold);font-size:15px;margin-bottom:9px}
+.tc-txt{color:var(--text-mid);font-size:14px;line-height:1.65;font-style:italic}
+
+/* ── GUARANTEE ── */
+.gbox{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac;border-radius:var(--r-lg);padding:34px 26px;text-align:center;box-shadow:var(--shadow-md)}
+.g-ico{font-size:44px;margin-bottom:10px}
+.g-t{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:#15803d;margin-bottom:10px}
+.g-txt{color:#166534;font-size:15px;line-height:1.75;max-width:480px;margin:0 auto}
+
+/* ── FAQ ── */
+.faq-item{background:#fff;border:1px solid var(--gray-border);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow);margin-bottom:10px}
+.faq-q{padding:17px 20px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:14px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;user-select:none;transition:background .15s}
+.faq-q:hover{background:var(--gray-bg)}
+.faq-ico{color:var(--text-light);font-size:20px;transition:transform .2s;flex-shrink:0;line-height:1}
+.faq-item.open .faq-ico{transform:rotate(180deg)}
+.faq-a{display:none;padding:14px 20px 18px;color:var(--text-mid);font-size:14px;line-height:1.7;border-top:1px solid var(--gray-border)}
+.faq-item.open .faq-a{display:block}
+
+/* ── FINAL CTA ── */
+.fcta{background:linear-gradient(150deg,var(--navy-deep) 0%,var(--navy) 60%,#1e4d94 100%);padding:64px 20px;text-align:center}
+.fcta h2{color:#fff;font-size:clamp(20px,4vw,28px);margin-bottom:22px}
+.fcta .ps{margin-bottom:22px}
+.result-pair{margin-top:22px;display:flex;justify-content:center;gap:36px;flex-wrap:wrap}
+.rp{font-size:14px;color:rgba(255,255,255,.72);text-align:left}
+.rp-lbl{display:block;color:rgba(255,255,255,.4);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;font-family:'Montserrat',sans-serif}
+
+/* ── FOOTER ── */
+footer{background:#09192e;padding:32px 20px;text-align:center}
+.flogo{font-family:'Montserrat',sans-serif;font-weight:900;font-size:22px;color:rgba(255,255,255,.6);letter-spacing:4px;margin-bottom:16px}
+.flogo span{color:var(--gold)}
+.flinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+.flinks a{color:rgba(255,255,255,.45);font-size:13px;text-decoration:none}
+.flinks a:hover{color:rgba(255,255,255,.7)}
+.flegal{color:rgba(255,255,255,.25);font-size:12px}
+.fpol{display:flex;justify-content:center;gap:20px;margin-top:10px}
+.fpol a{color:rgba(255,255,255,.3);font-size:12px;text-decoration:underline}
+.bprice{margin-top:10px;display:flex;align-items:center;gap:8px;font-size:14px}
+.bprice-old{text-decoration:line-through;color:var(--text-light);font-family:'Montserrat',sans-serif}
+.bprice-free{color:var(--green-icon);font-weight:700;font-family:'Montserrat',sans-serif;font-size:15px}
+.btotal{background:var(--gold-light);border:2px solid var(--gold);border-radius:var(--r-md);padding:16px 20px;margin-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.btotal-lbl{color:var(--text-mid);font-size:14px}
+.btotal-val{display:flex;align-items:center;gap:8px}
+.btotal-old{text-decoration:line-through;color:var(--text-light);font-family:'Montserrat',sans-serif;font-size:16px}
+.btotal-free{color:var(--gold-dark);font-weight:800;font-family:'Montserrat',sans-serif;font-size:18px}
+.btotal-big{font-family:'Montserrat',sans-serif;font-weight:900;font-size:48px;color:var(--green-icon);line-height:1}
+.btotal-gift{color:var(--gold-dark);font-weight:700;font-family:'Montserrat',sans-serif;font-size:15px;margin-top:4px}
+/* ── TP COUNTER ── */
+.tp-block{background:#07111f;border-top:3px solid var(--gold);border-bottom:3px solid rgba(245,158,11,.25);padding:32px 20px;text-align:center}
+.tp-question{color:rgba(255,255,255,.85);font-size:clamp(15px,2.8vw,19px);font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:18px;line-height:1.4}
+.tp-number{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(56px,12vw,96px);color:var(--gold);line-height:1;margin-bottom:6px}
+.tp-unit{color:rgba(255,255,255,.5);font-size:13px;text-transform:uppercase;letter-spacing:2px;font-family:'Montserrat',sans-serif;margin-bottom:18px}
+.tp-note{color:rgba(255,255,255,.45);font-size:13px;line-height:1.7;max-width:480px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<div class="announce">🇺🇦 Онлайн-сервіс для українців у Бельгії &nbsp;—&nbsp; Акційна ціна: 9 € замість 45 €</div>
+
+<header class="hdr">
+  <div class="logo">A<span>I</span>STA</div>
+  <div class="logo-sub">сервіс для пошуку роботи у Бельгії</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge">СПЕЦІАЛЬНА ЦІНА: 9 € замість 45 €</div>
+    <h1>ВІДПРАВЛЯЄШ десятки заявок<br>на роботу у Бельгії —<br><em>І ОТРИМУЄШ ТИШУ?</em></h1>
+    <p class="hero-sub">Не тому, що досвіду немає. Тому, що бельгійський рекрутер просто не розуміє твою посаду, а автофільтр відбраковує твій формат резюме.</p>
+    <div class="hero-promise">За <strong>15 хвилин</strong> отримаєш резюме нідерландською потрібного формату, де твій досвід нарешті звучить зрозуміло і доходить до рук і мізків живого рекрутера у Бельгії.</div>
+    <div class="price-row">
+      <span class="price-old">45 €</span><span class="price-arr">→</span><span class="price-new">9 €</span>
+    </div>
+    <a href="#buy" class="btn">НАРЕШТІ БУТИ ПОБАЧЕНОЮ ЯК СПЕЦІАЛІСТ — 9 €</a>
+    <p class="ps">Одноразова оплата. Без підписок. Без сюрпризів.</p>
+    <div class="bonuses">
+      <div class="bonus-header">🎁 Бонуси</div>
+      <div class="bonus-row"><span class="bonus-num">1</span>мотиваційний лист під конкретну вакансію</div>
+      <div class="bonus-row"><span class="bonus-num">2</span>підбірка актуальних вакансій під твій профіль</div>
+      <div class="bonus-row"><span class="bonus-num">3</span>уроки нідерландської «Пошук роботи у Фландрії»</div>
+      <div class="bonus-row"><span class="bonus-num">4</span>50% знижка на пакет 5 заявок</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMER 1 -->
+<div class="timer-wrap">
+  <div class="timer-lbl">До кінця акції</div>
+  <div class="timer">
+    <div class="tu"><div class="td" id="d1">02</div><div class="tl">Днів</div></div>
+    <div class="tu"><div class="td" id="h1">14</div><div class="tl">Годин</div></div>
+    <div class="tu"><div class="td" id="m1">37</div><div class="tl">Хвилин</div></div>
+    <div class="tu"><div class="td" id="s1">22</div><div class="tl">Секунд</div></div>
+  </div>
+  <p class="timer-note">Потім ціна повертається до <strong>45 €</strong></p>
+</div>
+
+<!-- TP COUNTER -->
+<div class="tp-block">
+  <div class="tp-question">Ти хочеш залишитися жити з дітьми у Бельгії?</div>
+  <div class="tp-number" id="tp-days">—</div>
+  <div class="tp-unit">днів залишилось</div>
+  <div class="tp-note">До кінця тимчасового захисту — до 04 березня 2027.<br>Кожен місяць без роботи — ще одна прогалина у твоєму резюме та ще одне розчарування.</div>
+</div>
+
+<!-- WHY IT WORKS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Причини</div>
+    <h2 class="sec-h">Чому я не отримую відповідей на свої заявки?</h2>
+    <p class="sec-sub">Три реальні причини — і як їх усунути</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+        <div>
+          <div class="card-t">Автоматичні фільтри — реальність</div>
+          <div class="card-d">75% компаній використовують програми, які відсіюють до 80% резюме до «живого» рекрутера. Автоматичний фільтр не оцінює дизайн — він шукає потрібні слова в потрібних місцях.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div>
+          <div class="card-t">Місцева специфіка і час мають значення</div>
+          <div class="card-d">Рекрутер витрачає 6–7 секунд на перегляд заявки. «Економіст планово-економічного відділу» — не зрозуміють. «Business controller» — зрозуміло одразу.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
+        <div>
+          <div class="card-t">Персоналізація під вакансію</div>
+          <div class="card-d">Одне резюме на всі посади не працює. Кожне резюме та мотиваційний лист треба адаптувати під конкретну вакансію — але це можна робити за 5 хвилин, не за 3 години.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BONUSES -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="tag">Бонуси</div>
+    <h2 class="sec-h">Що входить у пакет бонусів</h2>
+    <p class="sec-sub">Три інструменти — безкоштовно до твого резюме</p>
+    <div class="cards">
+      <div class="bcard">
+        <div class="bnum">01</div>
+        <div>
+          <div class="bt">Мотиваційний лист під одну вакансію</div>
+          <div class="bd">Вставляєш текст вакансії — отримуєш готовий лист нідерландською на основі твого резюме. Пояснює, чому саме ти підходиш для цього конкретного роботодавця.</div>
+          <div class="bprice"><span class="bprice-old">€20</span><span>→</span><span class="bprice-free">безкоштовно</span></div>
+        </div>
+      </div>
+      <div class="bcard">
+        <div class="bnum">02</div>
+        <div>
+          <div class="bt">Підбірка актуальних вакансій під твій профіль</div>
+          <div class="bd">На основі твого досвіду — готовий список відкритих вакансій у Бельгії, на які варто подати заявку прямо зараз. Не треба самостійно переглядати сотні оголошень.</div>
+          <div class="bprice"><span class="bprice-old">€15</span><span>→</span><span class="bprice-free">безкоштовно</span></div>
+        </div>
+      </div>
+      <div class="bcard">
+        <div class="bnum">03</div>
+        <div>
+          <div class="bt">Три уроки нідерландської «Пошук роботи у Фландрії»</div>
+          <div class="bd">Урок 1 — як читати вакансії на VDAB. Урок 2 — структура резюме. Урок 3 — написання мотиваційного листа. Практично і з прикладами.</div>
+          <div class="bprice"><span class="bprice-old">€45</span><span>→</span><span class="bprice-free">безкоштовно</span></div>
+        </div>
+      </div>
+    </div>
+      <div class="bcard">
+        <div class="bnum">04</div>
+        <div>
+          <div class="bt">Купон на 50% знижку на пакет з 5 резюме + 5 мотиваційних листів</div>
+          <div class="bd">Після того, як ви оформите перше резюме, ви отримаєте купон на 50% знижку на пакет з 5 резюме + 5 мотиваційних листів, адаптованих під інші вакансії. Замість €45 — лише €22.</div>
+          <div class="bprice"><span class="bprice-old">€45</span><span>→</span><span class="bprice-free">€22</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="btotal">
+      <span class="btotal-lbl">Загальна цінність бонусів:</span>
+      <div class="btotal-val">
+        <div class="btotal-big">€103</div>
+        <div class="btotal-gift">у подарунок 🎁</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PAIN POINTS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Впізнаєш себе?</div>
+    <h2 class="sec-h">Ситуації, знайомі кожному українцю у Фландрії</h2>
+    <p class="sec-sub" style="margin-bottom:28px"></p>
+    <div class="cards">
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">Надіслала 78 заявок. Отримала 0 відповідей.</div>
+          <div class="pd">Відкриваю пошту — знову порожньо. Витрачаєш понад 3 години на одну заявку. Надсилаєш. Чекаєш. Знову тиша. Вже не знаєш, що ще спробувати.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">Замість достойної роботи — знову cleaning</div>
+          <div class="pd">Шукаєш достойну роботу у Фландрії, але замість неї отримуєш пропозиції cleaning, horeca або interim. Твою кваліфікацію ніби не помічають.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">VDAB та OCMW вимагають звітів про пошук роботи</div>
+          <div class="pd">Твої консультанти тиснуть на тебе щодня, дають «траєкти» замість роботи, а практичної допомоги від них — нуль.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">Не знаєш, на що взагалі подаватися</div>
+          <div class="pd">Не розумієш, чи можна довіряти перекладу вакансії в Google чи ChatGPT, тому губишся: мій досвід сюди підходить чи ні?</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">Пошук роботи забирає сили і весь час</div>
+          <div class="pd">Ти можеш витрачати до 20 годин на тиждень на вакансії, переклади, резюме й мотиваційні листи — і все одно не отримати жодної відповіді. З часом це виснажує: починаєш сумніватися не лише у своєму CV, а й у собі, своєму досвіді та професійній цінності.</div>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-x">✕</div>
+        <div>
+          <div class="pt">Не знаєш, як пояснити дитині, чому ти працюєш не за фахом</div>
+          <div class="pd">В Україні ти була менеджеркою, викладачкою, вихователькою. А в Бельгії доводиться погоджуватися на важку фізичну працю. Іноді найважче — не сама робота, а відчуття, що навіть власній дитині складно пояснити, ким ти є насправді.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS (3 steps) -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="tag">Як це працює</div>
+    <h2 class="sec-h">Три кроки до резюме, яке працює</h2>
+    <p class="sec-sub" style="margin-bottom:30px"></p>
+    <div class="steps">
+      <div class="step">
+        <div class="snum snum-gold">1</div>
+        <div class="step-body">
+          <div class="st">Розкажи про себе українською</div>
+          <div class="sd">Посада, обов'язки, освіта, навички. Як розмовляєш — так і пиши. Сервіс розуміє українські терміни і контекст.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-gold">2</div>
+        <div class="step-body">
+          <div class="st">Ми переформатовуємо під Фландрію</div>
+          <div class="sd">Сервіс переформатовує твій досвід під стандарти Фландрії. Правильна структура, правильні назви посад, потрібні слова під твою сферу.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-gold">3</div>
+        <div class="step-body">
+          <div class="st">Скачуй і надсилай</div>
+          <div class="sd">Отримуєш файл у форматі, який вимагають усі кадрові агентства (docx + pdf). Готовий до надсилання роботодавцям.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MID CTA -->
+<div class="mid-cta">
+  <div class="wrap" style="text-align:center">
+    <div class="price-row">
+      <span class="price-old" style="color:rgba(255,255,255,.4)">45 €</span>
+      <span class="price-arr" style="color:rgba(255,255,255,.3)">→</span>
+      <span class="price-new">9 €</span>
+    </div>
+    <a href="#buy" class="btn">НАРЕШТІ БУТИ ПОБАЧЕНОЮ ЯК СПЕЦІАЛІСТ — 9 €</a>
+  </div>
+</div>
+
+<!-- TIMER 2 -->
+<div class="timer-wrap">
+  <div class="timer-lbl">До кінця акції</div>
+  <div class="timer">
+    <div class="tu"><div class="td" id="d2">02</div><div class="tl">Днів</div></div>
+    <div class="tu"><div class="td" id="h2">14</div><div class="tl">Годин</div></div>
+    <div class="tu"><div class="td" id="m2">37</div><div class="tl">Хвилин</div></div>
+    <div class="tu"><div class="td" id="s2">22</div><div class="tl">Секунд</div></div>
+  </div>
+  <p class="timer-note">Потім ціна повертається до <strong>45 €</strong></p>
+</div>
+
+<!-- ABOUT AUTHOR -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Про автора</div>
+    <h2 class="sec-h" style="margin-bottom:24px">Наталія Стасюк</h2>
+    <div class="author-box">
+      <div class="author-top">
+        <div class="ava">НС</div>
+        <div>
+          <div class="aname">Наталія Стасюк</div>
+          <div class="atitle">Сертифікована AI-фахівець</div>
+        </div>
+      </div>
+      <div class="astats">
+        <div class="astat"><div class="asn">4</div><div class="asl">роки у Бельгії</div></div>
+        <div class="astat"><div class="asn">100+</div><div class="asl">резюме створено</div></div>
+        <div class="astat"><div class="asn">53%</div><div class="asl">збільшення відгуків</div></div>
+      </div>
+      <div class="abio">
+        <p>Переїхавши з України до Бельгії в 2022 році з двома синами-підлітками, дипломом економіста, багаторічним досвідом та 5-ма мовами, я не змогла одразу знайти роботу. Нідерландську вивчила з нуля до рівня В2 і влаштувалася у міськадміністрації у відділі, який допомагає новоприбулим інтегруватися, вивчати нідерландську та шукати роботу.</p>
+        <p>Знаю, що ми, українці, підходимо сумлінно до пошуку роботи і тому витрачаємо багато сил, часу і іноді грошей. Але цього, на жаль, не достатньо. Треба враховувати специфічні умови бельгійського ринку праці. Саме тому був створений сервіс «AISTA».</p>
+        <p>Я не кар'єрний консультант і не обіцяю знайти роботу. Просто я проходила цей шлях пошуків і він був би набагато легшим і коротшим, якби я мала під рукою такий сервіс.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DETAILED HOW IT WORKS -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="tag">Детально</div>
+    <h2 class="sec-h">Як працює сервіс</h2>
+    <p class="sec-sub" style="margin-bottom:30px"></p>
+    <div class="steps">
+      <div class="step">
+        <div class="snum snum-blue">1</div>
+        <div class="step-body">
+          <div class="st">Ти розповідаєш про себе</div>
+          <div class="sd">Завантажуєш своє резюме або заповнюєш коротку форму — хто ти, де працювала, що вмієш. Ніяких складних питань. Ніяких правильних чи неправильних відповідей. <em>Система аналізує все.</em></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-blue">2</div>
+        <div class="step-body">
+          <div class="st">Знаходимо твою вакансію</div>
+          <div class="sd">Вставляєш посилання на вакансію або описуєш, яку роботу шукаєш. Сервіс аналізує, які слова, навички та формулювання важливі саме для цього роботодавця. <em>Готуємо ключові слова для резюме.</em></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-blue">3</div>
+        <div class="step-body">
+          <div class="st">Твій досвід «перекладається на бельгійський манір»</div>
+          <div class="sd">Сервіс адаптує твій український професійний досвід під бельгійський стандарт: правильна структура, точні терміни й формат, який читають автоматичні фільтри. Без втрати твоєї суті — але зрозуміло для місцевого ринку. <em>Система формує резюме і мотиваційний лист.</em></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-blue">4</div>
+        <div class="step-body">
+          <div class="st">Ти отримуєш резюме і мотиваційний лист</div>
+          <div class="sd">Два готові документи — у форматі docx та pdf, які підходять для систем найму. Працюючі документи у тебе на телефоні та комп'ютері.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="snum snum-blue">5</div>
+        <div class="step-body">
+          <div class="st">Отримуєш підбірку вакансій під свій профіль</div>
+          <div class="sd">На основі твого готового резюме сервіс формує список актуальних вакансій у Бельгії, на які варто подати заявку прямо зараз. Не треба самостійно переглядати сотні оголошень — тільки релевантні позиції саме для тебе.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU GET -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Результат</div>
+    <h2 class="sec-h">Що отримаєш за 15 хвилин</h2>
+    <p class="sec-sub" style="margin-bottom:24px"></p>
+    <div class="chk">
+      <div class="chk-row"><div class="chk-icon">✓</div><div class="chk-t">Резюме нідерландською у форматі docx та pdf</div></div>
+      <div class="chk-row"><div class="chk-icon">✓</div><div class="chk-t">Мотиваційний лист, адаптований під вакансію</div></div>
+      <div class="chk-row"><div class="chk-icon">✓</div><div class="chk-t">Підбірка актуальних вакансій під твій профіль</div></div>
+      <div class="chk-row"><div class="chk-icon">✓</div><div class="chk-t">Три уроки нідерландської «Пошук роботи у Фландрії»</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BEFORE / AFTER -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="tag">Трансформація</div>
+    <h2 class="sec-h">Було / Стане</h2>
+    <p class="sec-sub" style="margin-bottom:24px"></p>
+    <div class="ba">
+      <div class="ba-b">
+        <div class="ba-hdr">БЕЗ СЕРВІСУ AISTA</div>
+        <div class="ba-row"><span>✕</span> 3+ години на заявку</div>
+        <div class="ba-row"><span>✕</span> Десятки відмов</div>
+        <div class="ba-row"><span>✕</span> Сумніви у кваліфікації</div>
+        <div class="ba-row"><span>✕</span> Хаотичний пошук</div>
+      </div>
+      <div class="ba-a">
+        <div class="ba-hdr">З СЕРВІСОМ AISTA</div>
+        <div class="ba-row"><span>✓</span> 15 хвилин на якісну заявку</div>
+        <div class="ba-row"><span>✓</span> Запрошення на співбесіди</div>
+        <div class="ba-row"><span>✓</span> Впевненість у фаховості</div>
+        <div class="ba-row"><span>✓</span> Системний підхід до пошуку</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Відгуки</div>
+    <h2 class="sec-h">Що кажуть українки з Бельгії</h2>
+    <div style="background:var(--gold-light);border-left:4px solid var(--gold);border-radius:var(--r-sm);padding:16px 20px;margin-bottom:24px;font-size:15px;color:var(--text-mid);line-height:1.7;">
+      <strong style="color:var(--text);display:block;margin-bottom:4px;">«Подруга з меншим досвідом знайшла офісну роботу через CV-сервіс. Я щиро раділа — але поклала трубку і сиділа 10 хвилин у тиші. Чому вона, а не я?»</strong>
+      Саме це питання привело сюди більшість наших клієнток.
+    </div>
+    <div class="cards">
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-ava">ТК</div>
+          <div><div class="tc-name">Тетяна</div><div class="tc-role">Брюгге — бухгалтер → фінансовий асистент</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <div class="tc-txt">«Раніше за місяць розсилок заявок я не отримала жодної відповіді. Але після того, як я змінила резюме через сервіс AISTA, перше запрошення прийшло на 8-й день. Я навіть не вірила.»</div>
+      </div>
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-ava">ОМ</div>
+          <div><div class="tc-name">Оксана</div><div class="tc-role">Гент — методист → Educational Coordinator</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <div class="tc-txt">«З сервісом AISTA я економлю від 8 до 15 годин на тиждень на пошуках роботи, тому що мені тепер не потрібно підганяти вручну моє CV та мотиваційні листи під кожну вакансію.»</div>
+      </div>
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-ava">ІП</div>
+          <div><div class="tc-name">Ірина</div><div class="tc-role">Антверпен — педагог → асистент адміністрації</div></div>
+        </div>
+        <div class="stars">★★★★★</div>
+        <div class="tc-txt">«Я думала, проблема в мові. Виявилося — у форматі. Рекрутер просто не розумів мою посаду. За 15 хвилин зробила нове резюме, за тиждень — перше запрошення.»</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEE -->
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="gbox">
+      <div class="g-ico">🛡️</div>
+      <div class="g-t">Гарантія 7 днів: одне повідомлення — і гроші повертаються</div>
+      <div class="g-txt">Якщо сервіс тобі не підійшов, просто напиши «не задоволена». Без зайвих питань, без доведення, без стресу.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="tag">Часті питання</div>
+    <h2 class="sec-h" style="margin-bottom:24px">FAQ</h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Моя нідерландська на рівні А2. Це проблема?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Ні — і це один з найпоширеніших міфів. Бельгійський рекрутер оцінює твою мову <em>через документ</em>, ще до того, як почує тебе. CV нідерландською підвищує шанси на дзвінок, навіть якщо сама співбесіда пройде англійською. Плюс весь інтерфейс сервісу — українською. Вводиш дані рідною мовою, сервіс перекладає нідерландською з правильним CEFR-рівнем — без перебільшень і без "fluent".</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Мій диплом ще не визнаний у Бельгії.<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Не страшно. Є окремий блок для правильного формулювання українського диплому — щоб не нашкодити шансам.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Чим це відрізняється від Europass?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Europass — загальноєвропейський шаблон. Роботодавці Фландрії його не люблять. Ми даємо структуру і формат, який тут очікують.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Скільки часу займе створення резюме?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">15 хвилин від першого кроку до готового резюме, плюс мотиваційний лист. З телефону, без складних налаштувань.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Що таке програма-фільтр і чому вона важлива?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Більшість компаній у Фландрії використовують програму, яка автоматично перевіряє резюме ще до рекрутера. Якщо файл у неправильному форматі, вона відхиляє його одразу. Таким чином, ваше резюме ніхто навіть не читає.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Я вже надсилала дуже багато резюме — і нічого. Чому зараз буде інакше?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Тому що справа не в кількості, а у форматі. Якщо рекрутер не розуміє твою посаду або резюме не проходить автофільтр — скільки б заявок ти не надіслала, результат однаковий. Ми міняємо формат, а не кількість заявок.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">З мене потім будуть автоматично списуватись якісь гроші?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Ні — це одноразова оплата. Ніяких підписок, жодних сюрпризів.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">Я зараз ледве зводжу кінці з кінцями. Навіщо витрачати €9?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Розуміємо. Саме тому ціна — €9, а не €90. Консультант з CV у Бельгії бере від €90 за одну сесію. VDAB-курс — кілька місяців очікування. Ми — €9 одноразово, результат за 15 хвилин.<br><br>І якщо не задоволена — повертаємо гроші протягом 7 днів. Тобто ризик — нуль.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="faq(this)">А якщо мені потрібно буде підлаштувати резюме під іншу вакансію?<span class="faq-ico">▾</span></div>
+      <div class="faq-a">Після того, як ви оформите перше резюме, ви отримаєте купон на 50% знижку на пакет з 5 резюме + 5 мотиваційних листів, адаптованих під інші вакансії. Замість €45 — лише €22.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fcta" id="buy">
+  <div class="wrap">
+    <h2>Зроби резюме, яке нарешті прочитають</h2>
+    <div class="price-row">
+      <span class="price-old" style="color:rgba(255,255,255,.4)">45 €</span>
+      <span class="price-arr" style="color:rgba(255,255,255,.3)">→</span>
+      <span class="price-new">9 €</span>
+    </div>
+    <p class="ps" style="margin-bottom:22px">Одноразова оплата. Без підписок. Без сюрпризів.</p>
+    <a href="#" class="btn">НАРЕШТІ БУТИ ПОБАЧЕНОЮ ЯК СПЕЦІАЛІСТ — 9 €</a>
+    <div class="result-pair">
+      <div class="rp"><span class="rp-lbl">До</span>Тетяна надіслала 78 заявок без результату.</div>
+      <div class="rp"><span class="rp-lbl">Після</span>Перша відповідь на 9-й день.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMER FINAL -->
+<div class="timer-wrap">
+  <div class="timer-lbl">До кінця акції</div>
+  <div class="timer">
+    <div class="tu"><div class="td" id="d3">02</div><div class="tl">Днів</div></div>
+    <div class="tu"><div class="td" id="h3">14</div><div class="tl">Годин</div></div>
+    <div class="tu"><div class="td" id="m3">37</div><div class="tl">Хвилин</div></div>
+    <div class="tu"><div class="td" id="s3">22</div><div class="tl">Секунд</div></div>
+  </div>
+  <p class="timer-note">Потім ціна повертається до <strong>45 €</strong></p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">A<span>I</span>STA</div>
+  <div class="flinks">
+    <a href="#">Telegram</a>
+    <a href="#">+38 (000) 000-00-00</a>
+    <a href="#">info@example.com</a>
+  </div>
+  <div class="flegal">ФОП Петренко П.П. &nbsp;|&nbsp; Всі права захищені</div>
+  <div class="fpol">
+    <a href="#">Політика конфіденційності</a>
+    <a href="#">Публічна оферта</a>
+  </div>
+</footer>
+
+<script>
+function faq(el){el.parentElement.classList.toggle('open')}
+
+(function(){
+  var tp = new Date('2027-03-01');
+  var days = Math.ceil((tp - new Date()) / (1000*60*60*24));
+  var el = document.getElementById('tp-days');
+  if(el) el.textContent = days > 0 ? days : 0;
+})();
+
+(function(){
+  var key='aista_end';
+  var end=localStorage.getItem(key);
+  if(!end){end=new Date(Date.now()+3*24*60*60*1000).toISOString();localStorage.setItem(key,end)}
+  end=new Date(end);
+  function fmt(n){return String(n).padStart(2,'0')}
+  function tick(){
+    var diff=end-new Date();
+    if(diff<0)diff=0;
+    var d=Math.floor(diff/864e5);
+    var h=Math.floor(diff%864e5/36e5);
+    var m=Math.floor(diff%36e5/6e4);
+    var s=Math.floor(diff%6e4/1e3);
+    ['d1','d2','d3'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=fmt(d)});
+    ['h1','h2','h3'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=fmt(h)});
+    ['m1','m2','m3'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=fmt(m)});
+    ['s1','s2','s3'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=fmt(s)});
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
