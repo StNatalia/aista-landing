@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AISTA — Календар часу</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 44px 32px;
+    max-width: 740px;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7c6af7;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+    color: #999;
+    margin-bottom: 32px;
+  }
+
+  /* ── Calendar ── */
+  .cal-wrap {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .calendar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-end;
+    height: 260px;
+    position: relative;
+  }
+
+  .day-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    height: 100%;
+    max-width: 110px;
+  }
+
+  .day-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .day-bar {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Free (liberated) space — starts at 0 height */
+  .free-space {
+    width: 100%;
+    height: 0%;
+    background: #f0fdf6;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    overflow: hidden;
+    transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .free-space .free-icon {
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.4s ease 0.4s, transform 0.4s ease 0.4s;
+  }
+
+  .free-space.open .free-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Red block — starts at 100% */
+  .red-block {
+    width: 100%;
+    flex: 1;
+    background: #e63946;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: flex 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 0;
+    position: relative;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .red-block.initial { border-radius: 10px; }
+
+  .red-block-text {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  /* Thin strip state */
+  .red-block.thin {
+    flex: 0 0 28px;
+    border-radius: 0 0 10px 10px;
+  }
+  .red-block.thin .red-block-text { opacity: 0; }
+
+  /* Strip label */
+  .strip-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: #e63946;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.5s;
+  }
+  .red-block.thin + .strip-label-wrap .strip-label { opacity: 1; }
+
+  /* ── AISTA vacuum agent ── */
+  #aista-agent {
+    position: absolute;
+    top: 24px;
+    left: -60px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c6af7, #56cfb2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.62rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 16px rgba(124,106,247,0.40);
+    transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s;
+    z-index: 10;
+  }
+
+  #aista-agent.pulse {
+    box-shadow: 0 0 0 10px rgba(124,106,247,0.2),
+                0 4px 20px rgba(124,106,247,0.5);
+  }
+
+  /* vacuum trail */
+  .vacuum-trail {
+    position: absolute;
+    top: 48px;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #7c6af7, #56cfb2);
+    border-radius: 2px;
+    transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.5;
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    font-size: 0.75rem;
+    color: #888;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+  }
+  .legend-dot.red { background: #e63946; }
+  .legend-dot.green { background: #f0fdf6; border: 2px solid #56cfb2; }
+
+  /* ── Result message ── */
+  .result {
+    background: linear-gradient(135deg, #f0fdf8, #f5f0ff);
+    border-left: 4px solid #7c6af7;
+    border-radius: 0 12px 12px 0;
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    margin-bottom: 14px;
+  }
+  .result.show { opacity: 1; transform: translateY(0); }
+  .result strong { color: #7c6af7; }
+
+  /* ── Button ── */
+  .btn {
+    background: linear-gradient(135deg, #7c6af7, #56cfb2);
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(124,106,247,0.35);
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s;
+    margin-bottom: 20px;
+  }
+  .btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(124,106,247,0.45);
+  }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+
+  .reset-link {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 0.78rem;
+    color: #bbb;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .reset-link:hover { color: #888; }
+
+  /* sparkle */
+  .sparkle {
+    position: fixed;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="eyebrow">Що змінить AISTA</div>
+  <h2>Твій тиждень до і після</h2>
+  <p class="subtitle">Натисни — і подивись, що відбувається з твоїм часом</p>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot red"></div>
+      <span>Пошук роботи вручну</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot green"></div>
+      <span>Твій вільний час</span>
+    </div>
+  </div>
+
+  <div class="cal-wrap">
+    <!-- AISTA agent -->
+    <div id="aista-agent">AISTA</div>
+    <!-- Trail line -->
+    <div class="vacuum-trail" id="trail"></div>
+
+    <div class="calendar" id="calendar">
+      <!-- Columns generated by JS -->
+    </div>
+  </div>
+
+  <button class="btn" id="btn" onclick="runAnimation()">
+    Запустити AISTA →
+  </button>
+
+  <div class="result" id="result">
+    ✅ <strong>Замість годин — лише 15 хвилин на день.</strong><br>
+    AISTA опрацьовує вакансії, адаптує резюме і готує мотиваційні листи. А ти — живеш.
+  </div>
+
+  <button class="reset-link" id="resetBtn" onclick="resetAll()">↺ Спробувати ще раз</button>
+</div>
+
+<script>
+  const DAYS = [
+    { label: 'Пн', icon: '☕' },
+    { label: 'Вт', icon: '🌳' },
+    { label: 'Ср', icon: '📖' },
+    { label: 'Чт', icon: '👧' },
+    { label: 'Пт', icon: '🎵' },
+  ];
+
+  function buildCalendar() {
+    const cal = document.getElementById('calendar');
+    cal.innerHTML = '';
+
+    DAYS.forEach((d, i) => {
+      const col = document.createElement('div');
+      col.className = 'day-col';
+      col.id = `col-${i}`;
+
+      col.innerHTML = `
+        <div class="day-label">${d.label}</div>
+        <div class="day-bar" id="bar-${i}">
+          <div class="free-space" id="free-${i}">
+            <span class="free-icon">${d.icon}</span>
+          </div>
+          <div class="red-block initial" id="red-${i}">
+            <div class="red-block-text">пошук роботи</div>
+          </div>
+        </div>
+      `;
+
+      cal.appendChild(col);
+    });
+  }
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function getColCenter(i) {
+    const col = document.getElementById(`col-${i}`);
+    const r = col.getBoundingClientRect();
+    const calR = document.getElementById('calendar').getBoundingClientRect();
+    // position relative to cal-wrap
+    const calWrap = document.querySelector('.cal-wrap').getBoundingClientRect();
+    return r.left - calWrap.left + r.width / 2;
+  }
+
+  function burst(el) {
+    const r = el.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    const colors = ['#7c6af7','#56cfb2','#f7a06a','#fff'];
+    for (let i = 0; i < 8; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.cssText = `left:${cx}px;top:${cy}px;background:${colors[i%colors.length]};transform:translate(-50%,-50%)`;
+      document.body.appendChild(s);
+      const angle = (Math.PI * 2 * i) / 8;
+      const dist = 20 + Math.random() * 20;
+      s.animate([
+        { transform: 'translate(-50%,-50%) scale(1)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${Math.cos(angle)*dist}px), calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`, opacity: 0 }
+      ], { duration: 500, easing: 'ease-out', fill: 'forwards' }).onfinish = () => s.remove();
+    }
+  }
+
+  let running = false;
+
+  async function runAnimation() {
+    if (running) return;
+    running = true;
+    document.getElementById('btn').disabled = true;
+
+    const agent = document.getElementById('aista-agent');
+    const trail = document.getElementById('trail');
+    const calWrap = document.querySelector('.cal-wrap');
+    const calWrapW = calWrap.offsetWidth;
+
+    // Move agent into view (to first col)
+    await sleep(100);
+
+    for (let i = 0; i < DAYS.length; i++) {
+      const cx = getColCenter(i);
+
+      // Move agent to column center
+      agent.style.left = (cx - 26) + 'px';
+      trail.style.width = cx + 'px';
+      agent.classList.add('pulse');
+
+      await sleep(600);
+
+      // Shrink the red block
+      const redBlock = document.getElementById(`red-${i}`);
+      const freeSpace = document.getElementById(`free-${i}`);
+
+      redBlock.classList.remove('initial');
+      redBlock.classList.add('thin');
+      freeSpace.style.height = 'calc(100% - 28px)';
+
+      // Show icon after a moment
+      await sleep(300);
+      freeSpace.classList.add('open');
+      burst(agent);
+
+      agent.classList.remove('pulse');
+      await sleep(350);
+    }
+
+    // Move agent off to the right
+    agent.style.left = (calWrapW + 20) + 'px';
+    trail.style.width = '100%';
+
+    await sleep(700);
+
+    // Show result
+    document.getElementById('result').classList.add('show');
+    document.getElementById('resetBtn').style.display = 'inline-block';
+  }
+
+  function resetAll() {
+    running = false;
+
+    const agent = document.getElementById('aista-agent');
+    const trail = document.getElementById('trail');
+
+    agent.style.transition = 'none';
+    agent.style.left = '-60px';
+    trail.style.transition = 'none';
+    trail.style.width = '0%';
+
+    document.getElementById('result').classList.remove('show');
+    document.getElementById('resetBtn').style.display = 'none';
+    document.getElementById('btn').disabled = false;
+
+    buildCalendar();
+
+    // Re-enable transitions after reset
+    setTimeout(() => {
+      agent.style.transition = 'left 0.55s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s';
+      trail.style.transition = 'width 0.55s cubic-bezier(0.4,0,0.2,1)';
+    }, 50);
+  }
+
+  buildCalendar();
+</script>
+</body>
+</html>

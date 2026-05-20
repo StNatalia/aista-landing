@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AISTA — Двері</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 48px 32px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7c6af7;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+    color: #999;
+    margin-bottom: 32px;
+  }
+
+  /* ── Scene ── */
+  .scene {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    height: 260px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  /* ── Floor ── */
+  .floor {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 12px;
+    background: linear-gradient(180deg, #e0e0ec, #d0d0e0);
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* ── Door frame ── */
+  .door-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .door-frame {
+    width: 130px;
+    height: 200px;
+    background: #c8c0d8;
+    border-radius: 6px 6px 0 0;
+    padding: 6px;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Warm glow behind right door (hidden until open) */
+  .door-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(160deg, #fff8e8, #ffe4b0);
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s;
+    z-index: 0;
+  }
+
+  /* ── Door panel ── */
+  .door-panel {
+    flex: 1;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Both doors — identical design */
+  .door-left .door-panel {
+    background: #d8d0e8;
+    border: 2px solid #b8b0cc;
+  }
+
+  #rightDoor {
+    transform-origin: right center;
+    transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+  }
+
+  #rightDoor.open {
+    transform: perspective(700px) rotateY(-72deg);
+  }
+
+  /* Door icons */
+  .door-icon {
+    font-size: 2.6rem;
+    line-height: 1;
+  }
+
+  .door-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: #8878a8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 12px;
+    left: 0; right: 0;
+    text-align: center;
+  }
+
+  /* Door knob */
+  .knob {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #a090c0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .knob-left  { right: 10px; }
+  .knob-right { left: 10px;  }
+
+  /* Inside the open door */
+  .door-inside {
+    position: absolute;
+    inset: 6px;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(160deg, #fff8e8, #ffe4b0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.5s ease 0.7s;
+  }
+  .door-inside.show { opacity: 1; }
+  .door-inside .inside-icon { font-size: 2.2rem; }
+  .door-inside .inside-label {
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #a07040;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Person (center) ── */
+  .person-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 12px;
+    width: 120px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
+  }
+
+  .person-figure {
+    font-size: 3.2rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cv-paper {
+    background: white;
+    border: 2px solid #7c6af7;
+    border-radius: 5px;
+    width: 42px;
+    height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #7c6af7;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(124,106,247,0.2);
+    position: relative;
+  }
+
+  .cv-paper::after { display: none; }
+
+  /* ── AISTA Key ── */
+  #aistaKey {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #7c6af7, #56cfb2);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 6px 12px 6px 8px;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(124,106,247,0.4);
+    white-space: nowrap;
+    opacity: 0;
+    z-index: 20;
+    pointer-events: none;
+    transition: left 0.7s cubic-bezier(0.4,0,0.2,1),
+                top  0.7s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.3s ease,
+                transform 0.3s ease;
+  }
+
+  .key-icon { font-size: 1rem; }
+
+  /* Sparkle */
+  .sparkle {
+    position: fixed;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  /* ── Result ── */
+  .result {
+    background: linear-gradient(135deg, #f0fdf8, #f5f0ff);
+    border-left: 4px solid #7c6af7;
+    border-radius: 0 12px 12px 0;
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 0.88rem;
+    color: #333;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    margin-bottom: 14px;
+  }
+  .result.show { opacity: 1; transform: translateY(0); }
+  .result strong { color: #7c6af7; }
+
+  /* ── Button ── */
+  .btn {
+    background: linear-gradient(135deg, #7c6af7, #56cfb2);
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(124,106,247,0.35);
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s;
+    margin-bottom: 20px;
+  }
+  .btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(124,106,247,0.45);
+  }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+
+  .reset-link {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 0.78rem;
+    color: #bbb;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .reset-link:hover { color: #888; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="eyebrow">Твій досвід нікуди не зник</div>
+  <h2>Які двері відчинить твоє резюме?</h2>
+  <p class="subtitle">У тебе є CV. Але не кожні двері відчиняються однаково.</p>
+
+  <div class="scene" id="scene">
+    <div class="floor"></div>
+
+    <!-- LEFT door: cleaning -->
+    <div class="door-wrap">
+      <div class="door-frame door-left">
+        <div class="door-panel">
+          <div class="door-icon">🧹</div>
+          <div class="door-icon" style="font-size:1.8rem; margin-top:-8px;">🪣</div>
+          <div class="door-label">прибирання</div>
+          <div class="knob knob-right"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: Person with CV -->
+    <div class="person-wrap" id="personWrap">
+      <div class="person-figure">🧍‍♀️</div>
+      <div class="cv-paper">CV</div>
+    </div>
+
+    <!-- RIGHT door: profession -->
+    <div class="door-wrap" id="rightDoorWrap">
+      <div class="door-frame door-left">
+        <div class="door-inside" id="doorInside">
+          <div class="inside-icon">💼</div>
+        </div>
+        <div class="door-glow" id="doorGlow"></div>
+        <div class="door-panel" id="rightDoor">
+          <div class="door-icon">💼</div>
+          <div class="door-label">робота за фахом</div>
+          <div class="knob knob-left" id="knob"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AISTA key (positioned by JS) -->
+    <div id="aistaKey">
+      <span class="key-icon">🗝️</span>
+      AISTA
+    </div>
+  </div>
+
+  <button class="btn" id="btn" onclick="runAnimation()">
+    Відкрити з AISTA →
+  </button>
+
+  <div class="result" id="result">
+    ✅ <strong>Твій досвід — той самий. Змінилась упаковка.</strong><br>
+    AISTA адаптує твоє резюме так, щоб правильні двері нарешті відчинились.
+  </div>
+
+  <button class="reset-link" id="resetBtn" onclick="resetAll()">↺ Спробувати ще раз</button>
+</div>
+
+<script>
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  function getCenter(el) {
+    const r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  }
+
+  function burst(cx, cy) {
+    const colors = ['#7c6af7','#56cfb2','#f7a06a','#fff','#ffe066'];
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.cssText = `left:${cx}px;top:${cy}px;background:${colors[i%colors.length]};transform:translate(-50%,-50%)`;
+      document.body.appendChild(s);
+      const angle = (Math.PI * 2 * i) / 10;
+      const dist  = 22 + Math.random() * 22;
+      s.animate([
+        { transform: 'translate(-50%,-50%) scale(1.2)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${Math.cos(angle)*dist}px), calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`, opacity: 0 }
+      ], { duration: 560, easing: 'ease-out', fill: 'forwards' }).onfinish = () => s.remove();
+    }
+  }
+
+  async function flyKeyTo(key, toEl) {
+    const toR  = toEl.getBoundingClientRect();
+    const destX = toR.left + 16;
+    const destY = toR.top  + toR.height / 2 - 16;
+    key.style.left = destX + 'px';
+    key.style.top  = destY + 'px';
+    await sleep(750);
+  }
+
+  let running = false;
+
+  async function runAnimation() {
+    if (running) return;
+    running = true;
+    document.getElementById('btn').disabled = true;
+
+    const key      = document.getElementById('aistaKey');
+    const knob     = document.getElementById('knob');
+    const rightDoor = document.getElementById('rightDoor');
+    const doorGlow  = document.getElementById('doorGlow');
+    const doorInside = document.getElementById('doorInside');
+    const scene    = document.getElementById('scene');
+    const person   = document.getElementById('personWrap');
+
+    // ── 1. Key appears near person ──────────────────
+    const personC = getCenter(person);
+    const sceneR  = scene.getBoundingClientRect();
+
+    key.style.transition = 'none';
+    key.style.left    = (personC.x - sceneR.left - 40) + 'px';
+    key.style.top     = (personC.y - sceneR.top  - 60) + 'px';
+    key.style.opacity = '0';
+    key.style.transform = 'scale(0.5)';
+
+    // Make key position relative to scene
+    scene.style.position = 'relative';
+    key.style.position = 'absolute';
+
+    await sleep(50);
+    key.style.transition = 'opacity 0.3s ease, transform 0.3s ease, left 0.7s cubic-bezier(0.4,0,0.2,1), top 0.7s cubic-bezier(0.4,0,0.2,1)';
+    key.style.opacity   = '1';
+    key.style.transform = 'scale(1)';
+
+    await sleep(600);
+
+    // ── 2. Key flies to knob ────────────────────────
+    const knobR   = knob.getBoundingClientRect();
+    const destX   = knobR.left - sceneR.left - 70;
+    const destY   = knobR.top  - sceneR.top  - 12;
+    key.style.left = destX + 'px';
+    key.style.top  = destY + 'px';
+
+    await sleep(750);
+
+    // ── 3. Knob shakes (key turning) ────────────────
+    knob.animate([
+      { transform: 'translateY(-50%) rotate(0deg)' },
+      { transform: 'translateY(-50%) rotate(-30deg)' },
+      { transform: 'translateY(-50%) rotate(20deg)' },
+      { transform: 'translateY(-50%) rotate(-10deg)' },
+      { transform: 'translateY(-50%) rotate(0deg)' },
+    ], { duration: 400, easing: 'ease-in-out' });
+
+    const knobC = getCenter(knob);
+    burst(knobC.x, knobC.y);
+
+    // Key fades out
+    key.style.opacity   = '0';
+    key.style.transform = 'scale(0.5)';
+
+    await sleep(350);
+
+    // ── 4. Glow appears behind door ─────────────────
+    doorGlow.style.opacity = '1';
+    await sleep(200);
+
+    // ── 5. Door swings open ─────────────────────────
+    rightDoor.classList.add('open');
+    doorInside.classList.add('show');
+
+    // Sparkle from open door
+    await sleep(500);
+    const doorR = document.getElementById('rightDoor').getBoundingClientRect();
+    burst(doorR.left + 20, doorR.top + doorR.height / 2);
+
+    // ── 6. Result message ───────────────────────────
+    await sleep(600);
+    document.getElementById('result').classList.add('show');
+    document.getElementById('resetBtn').style.display = 'inline-block';
+  }
+
+  function resetAll() {
+    running = false;
+    document.getElementById('btn').disabled = false;
+    document.getElementById('result').classList.remove('show');
+    document.getElementById('resetBtn').style.display = 'none';
+
+    const key = document.getElementById('aistaKey');
+    key.style.transition = 'none';
+    key.style.opacity = '0';
+
+    document.getElementById('rightDoor').classList.remove('open');
+    document.getElementById('doorGlow').style.opacity = '0';
+    document.getElementById('doorInside').classList.remove('show');
+  }
+</script>
+</body>
+</html>
