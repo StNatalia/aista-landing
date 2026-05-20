@@ -205,12 +205,6 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
 .btotal-free{color:var(--gold-dark);font-weight:800;font-family:'Montserrat',sans-serif;font-size:18px}
 .btotal-big{font-family:'Montserrat',sans-serif;font-weight:900;font-size:48px;color:var(--green-icon);line-height:1}
 .btotal-gift{color:var(--gold-dark);font-weight:700;font-family:'Montserrat',sans-serif;font-size:15px;margin-top:4px}
-/* ── TP COUNTER ── */
-.tp-block{background:#07111f;border-top:3px solid var(--gold);border-bottom:3px solid rgba(245,158,11,.25);padding:32px 20px;text-align:center}
-.tp-question{color:rgba(255,255,255,.85);font-size:clamp(15px,2.8vw,19px);font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:18px;line-height:1.4}
-.tp-number{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(56px,12vw,96px);color:var(--gold);line-height:1;margin-bottom:6px}
-.tp-unit{color:rgba(255,255,255,.5);font-size:13px;text-transform:uppercase;letter-spacing:2px;font-family:'Montserrat',sans-serif;margin-bottom:18px}
-.tp-note{color:rgba(255,255,255,.45);font-size:13px;line-height:1.7;max-width:480px;margin:0 auto}
 </style>
 </head>
 <body>
@@ -257,13 +251,6 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
   <p class="timer-note">Потім ціна повертається до <strong>45 €</strong></p>
 </div>
 
-<!-- TP COUNTER -->
-<div class="tp-block">
-  <div class="tp-question">Ти хочеш залишитися жити з дітьми у Бельгії?</div>
-  <div class="tp-number" id="tp-days">—</div>
-  <div class="tp-unit">днів залишилось</div>
-  <div class="tp-note">До кінця тимчасового захисту — до 04 березня 2027.<br>Кожен місяць без роботи — ще одна прогалина у твоєму резюме та ще одне розчарування.</div>
-</div>
 
 <!-- WHY IT WORKS -->
 <section class="sec">
@@ -700,12 +687,6 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
 <script>
 function faq(el){el.parentElement.classList.toggle('open')}
 
-(function(){
-  var tp = new Date('2027-03-01');
-  var days = Math.ceil((tp - new Date()) / (1000*60*60*24));
-  var el = document.getElementById('tp-days');
-  if(el) el.textContent = days > 0 ? days : 0;
-})();
 
 (function(){
   var key='aista_end';
