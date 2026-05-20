@@ -205,6 +205,9 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
 .btotal-free{color:var(--gold-dark);font-weight:800;font-family:'Montserrat',sans-serif;font-size:18px}
 .btotal-big{font-family:'Montserrat',sans-serif;font-weight:900;font-size:48px;color:var(--green-icon);line-height:1}
 .btotal-gift{color:var(--gold-dark);font-weight:700;font-family:'Montserrat',sans-serif;font-size:15px;margin-top:4px}
+/* ── TODAY BADGE ── */
+.bcard-today{position:relative}
+.badge-today{position:absolute;top:-12px;right:12px;background:#e63946;color:#fff;font-family:'Montserrat',sans-serif;font-weight:900;font-size:10px;letter-spacing:1px;padding:5px 12px;border-radius:50px;white-space:nowrap;box-shadow:0 3px 10px rgba(230,57,70,0.45);z-index:2}
 /* ── JOB PAIR ── */
 .tc-job-pair{background:#f0f4ff;border:1px solid #d0dcff;border-radius:8px;padding:10px 14px;margin:10px 0 6px;font-size:13px;line-height:1.5}
 .jp-ua{color:#666;margin-bottom:3px}.jp-ua strong{color:#333;font-weight:700}
@@ -240,7 +243,7 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
       <div class="bonus-row"><span class="bonus-num">1</span>мотиваційний лист під конкретну вакансію</div>
       <div class="bonus-row"><span class="bonus-num">2</span>підбірка актуальних вакансій під твій профіль</div>
       <div class="bonus-row"><span class="bonus-num">3</span>уроки нідерландської «Пошук роботи у Фландрії»</div>
-      <div class="bonus-row"><span class="bonus-num">4</span>купон на 25 євро на пакет з 5 резюме + 5 мотиваційних листів</div>
+      <div class="bonus-row"><span class="bonus-num">4</span>пакет 5 резюме + 5 мотиваційних листів за 22 € (тільки сьогодні)</div>
     </div>
   </div>
 </section>
@@ -330,11 +333,12 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
         </div>
       </div>
     </div>
-      <div class="bcard">
+      <div class="bcard bcard-today">
+        <div class="badge-today">ТІЛЬКИ СЬОГОДНІ</div>
         <div class="bnum">04</div>
         <div>
-          <div class="bt">Купон на 25 євро на пакет з 5 резюме + 5 мотиваційних листів</div>
-          <div class="bd">Після того, як ви оформите перше резюме, ви отримаєте купон на 25 євро на пакет з 5 резюме + 5 мотиваційних листів. З цим купоном ти зможеш безкоштовно підігнати свої заявки ще під 5 вакансій.</div>
+          <div class="bt">Пакет 5 резюме + 5 мотиваційних листів за 22 €</div>
+          <div class="bd">Після того, як ти зробиш перше резюме, ти отримаєш можливість купити пакет з 5 резюме + 5 мотиваційних листів лише за 22 євро. І таким чином ти зможеш адаптувати свою заявку ще під 5 вакансій по 4,5 євро.</div>
           <div class="bprice"><span class="bprice-old">€45</span><span>→</span><span class="bprice-free">€22</span></div>
         </div>
       </div>
@@ -342,7 +346,7 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
     <div class="btotal">
       <span class="btotal-lbl">Загальна цінність бонусів:</span>
       <div class="btotal-val">
-        <div class="btotal-big">€103</div>
+        <div class="btotal-big">€105</div>
         <div class="btotal-gift">у подарунок 🎁</div>
       </div>
     </div>
@@ -530,7 +534,7 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
 
 <!-- INTERACTIVE: CALENDAR -->
 <div class="interactive-wrap">
-  <iframe src="aista-calendar.html" height="640" scrolling="no" title="Твій тиждень до і після"></iframe>
+  <iframe src="aista-calendar.html" height="760" scrolling="no" title="Твій тиждень до і після"></iframe>
 </div>
 
 <div class="divider"></div>
@@ -574,8 +578,8 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
           <div><div class="tc-name">Тетяна</div><div class="tc-role">Брюгге</div></div>
         </div>
         <div class="tc-job-pair">
-          <div class="jp-ua">🇺🇦 UA: <strong>Бухгалтер по зарплаті</strong></div>
-          <div class="jp-be">🇧🇪 BE: <strong>Payroll Officer</strong></div>
+          <div class="jp-ua">UA:<strong>Бухгалтер по зарплаті</strong></div>
+          <div class="jp-be">BE:<strong>Payroll Officer</strong></div>
         </div>
         <div class="stars">★★★★★</div>
         <div class="tc-txt">«Раніше за місяць розсилок заявок я не отримала жодної відповіді. Але після того, як я змінила резюме через сервіс AISTA, перше запрошення прийшло на 8-й день. Я навіть не вірила.»</div>
@@ -586,8 +590,8 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
           <div><div class="tc-name">Оксана</div><div class="tc-role">Гент</div></div>
         </div>
         <div class="tc-job-pair">
-          <div class="jp-ua">🇺🇦 UA: <strong>Економіст</strong></div>
-          <div class="jp-be">🇧🇪 BE: <strong>Business controller</strong></div>
+          <div class="jp-ua">UA:<strong>Економіст</strong></div>
+          <div class="jp-be">BE:<strong>Business controller</strong></div>
         </div>
         <div class="stars">★★★★★</div>
         <div class="tc-txt">«З сервісом AISTA я економлю від 8 до 15 годин на тиждень на пошуках роботи, тому що мені тепер не потрібно підганяти вручну моє CV та мотиваційні листи під кожну вакансію.»</div>
@@ -598,8 +602,8 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
           <div><div class="tc-name">Ірина</div><div class="tc-role">Антверпен</div></div>
         </div>
         <div class="tc-job-pair">
-          <div class="jp-ua">🇺🇦 UA: <strong>Завідувач господарства</strong></div>
-          <div class="jp-be">🇧🇪 BE: <strong>Verantwoordelijke Technische Dienst & Facilitair Beheer</strong></div>
+          <div class="jp-ua">UA:<strong>Завідувач господарства</strong></div>
+          <div class="jp-be">BE:<strong>Verantwoordelijke Technische Dienst & Facilitair Beheer</strong></div>
         </div>
         <div class="stars">★★★★★</div>
         <div class="tc-txt">«Я думала, проблема в мові. Виявилося — у форматі. Рекрутер просто не розумів мою посаду. За 15 хвилин зробила нове резюме, за тиждень — перше запрошення.»</div>
@@ -662,7 +666,7 @@ footer{background:#09192e;padding:32px 20px;text-align:center}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="faq(this)">А якщо мені потрібно буде підлаштувати резюме під іншу вакансію?<span class="faq-ico">▾</span></div>
-      <div class="faq-a">Після того, як ви оформите перше резюме, ви отримаєте купон на 25 євро на пакет з 5 резюме + 5 мотиваційних листів. З цим купоном ти зможеш безкоштовно підігнати свої заявки ще під 5 вакансій.</div>
+      <div class="faq-a">Після того, як ти зробиш перше резюме, ти отримаєш можливість купити пакет з 5 резюме + 5 мотиваційних листів лише за 22 євро. І таким чином ти зможеш адаптувати свою заявку ще під 5 вакансій по 4,5 євро.</div>
     </div>
   </div>
 </section>
