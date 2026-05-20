@@ -4,12 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AISTA — Прев'ю інтерактиву</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #EBECF0;
+    --fg: #4A5568;
+    --muted: #718096;
+    --muted-light: #A0AEC0;
+    --accent: #FF8800;
+    --accent-lt: #FFA040;
+    --accent-deep: #E07700;
+    --sd: rgba(163,177,198,0.6);
+    --sl: rgba(255,255,255,0.75);
+    --sh-out: 9px 9px 18px var(--sd), -9px -9px 18px var(--sl);
+    --sh-out-lg: 14px 14px 26px var(--sd), -14px -14px 26px var(--sl);
+    --sh-out-sm: 5px 5px 10px var(--sd), -5px -5px 10px var(--sl);
+    --sh-in: inset 6px 6px 12px var(--sd), inset -6px -6px 12px var(--sl);
+    --sh-in-deep: inset 10px 10px 20px var(--sd), inset -10px -10px 20px var(--sl);
+    --sh-in-sm: inset 3px 3px 6px var(--sd), inset -3px -3px 6px var(--sl);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f0f2f8;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -18,34 +40,37 @@
   }
 
   .card {
-    background: white;
-    border-radius: 24px;
+    background: var(--bg);
+    border-radius: 32px;
     padding: 40px 48px 36px;
     max-width: 860px;
     width: 100%;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+    box-shadow: var(--sh-out-lg);
     text-align: center;
   }
 
   .eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #7c6af7;
+    color: var(--accent);
     margin-bottom: 10px;
   }
 
   h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
-    color: #1a1a2e;
+    color: var(--fg);
     margin-bottom: 6px;
+    letter-spacing: -0.5px;
   }
 
   .subtitle {
     font-size: 0.9rem;
-    color: #888;
+    color: var(--muted);
     margin-bottom: 36px;
   }
 
@@ -69,6 +94,7 @@
     letter-spacing: 0.07em;
     text-transform: uppercase;
     margin-bottom: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   .label-icon-x {
@@ -78,17 +104,17 @@
     line-height: 1;
   }
 
-  .label-text-left { color: #b0b0c0; }
+  .label-text-left { color: var(--muted-light); }
 
   .label-icon-check {
     font-size: 1rem;
     font-weight: 900;
-    color: #4caf7a;
+    color: var(--accent);
     line-height: 1;
   }
-  .label-text-right { color: #4caf7a; }
+  .label-text-right { color: var(--accent); }
 
-  /* ── TRASH BIN ── */
+  /* ── TRASH BIN (neumorphic) ── */
   .trash-wrap {
     display: flex;
     flex-direction: column;
@@ -99,36 +125,38 @@
   .trash-lid {
     width: 160px;
     height: 14px;
-    background: #c8c8d8;
-    border-radius: 5px 5px 0 0;
+    background: var(--bg);
+    border-radius: 6px 6px 0 0;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: var(--sh-out-sm);
   }
   .trash-lid::before {
     content: '';
     width: 44px;
     height: 10px;
-    background: #b8b8cc;
-    border-radius: 4px 4px 0 0;
+    background: var(--bg);
+    border-radius: 5px 5px 0 0;
     position: absolute;
     top: -10px;
+    box-shadow: var(--sh-out-sm);
   }
 
-  /* Body */
+  /* Body — pressed well */
   .trash-body {
     width: 148px;
-    background: #e4e4ef;
-    border-radius: 0 0 10px 10px;
-    border: 2px solid #c8c8d8;
-    border-top: none;
-    padding: 10px 8px 10px;
+    background: var(--bg);
+    border-radius: 0 0 12px 12px;
+    border: none;
+    padding: 12px 8px 10px;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--sh-in);
   }
 
-  /* Vertical stripes inside bin */
+  /* Vertical stripes — subtle */
   .trash-body::after {
     content: '';
     position: absolute;
@@ -137,8 +165,8 @@
       90deg,
       transparent 0px,
       transparent 30px,
-      rgba(180,180,200,0.35) 30px,
-      rgba(180,180,200,0.35) 32px
+      rgba(163,177,198,0.20) 30px,
+      rgba(163,177,198,0.20) 32px
     );
     pointer-events: none;
   }
@@ -157,7 +185,7 @@
     width: 14px;
     height: 18px;
     border-radius: 2px;
-    background: #c8c8d8;
+    background: #c8ccd6;
     position: relative;
   }
 
@@ -166,20 +194,20 @@
     position: absolute;
     top: 0; right: 0;
     width: 4px; height: 4px;
-    background: #b8b8cc;
+    background: #b0b6c2;
     clip-path: polygon(100% 0, 0 0, 100% 100%);
     border-radius: 0 2px 0 0;
   }
 
   .cv.colored {
-    background: linear-gradient(135deg, #7c6af7 0%, #56cfb2 100%);
-    box-shadow: 0 2px 6px rgba(124,106,247,0.28);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-lt) 100%);
+    box-shadow: 0 2px 6px rgba(255,136,0,0.32);
   }
-  .cv.colored::after { background: rgba(255,255,255,0.35); }
+  .cv.colored::after { background: rgba(255,255,255,0.45); }
 
   .cv.hero {
     background: #e63946;
-    box-shadow: 0 0 0 2px white, 0 0 0 3.5px #e63946;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px #e63946;
     z-index: 5;
   }
   .cv.hero::after { background: #c0303a; }
@@ -195,14 +223,15 @@
   .detective {
     font-size: 2.4rem;
     line-height: 1;
-    filter: drop-shadow(0 2px 4px rgba(76,175,122,0.25));
+    filter: drop-shadow(0 2px 4px rgba(255,136,0,0.25));
   }
 
   .color-grid-wrap {
-    background: #f0fdf6;
-    border: 2px solid #b7e8cc;
-    border-radius: 10px;
-    padding: 10px 8px;
+    background: var(--bg);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 8px;
+    box-shadow: var(--sh-in-sm);
   }
 
   /* ── AISTA Portal ── */
@@ -210,7 +239,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 0;
   }
 
@@ -218,18 +247,20 @@
     width: 96px;
     height: 96px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7c6af7 0%, #56cfb2 100%);
+    background: var(--accent);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
-    font-weight: 900;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
     font-size: 1.05rem;
     letter-spacing: 0.08em;
     box-shadow:
-      0 0 0 5px rgba(124,106,247,0.15),
-      0 6px 24px rgba(124,106,247,0.30);
+      6px 6px 14px rgba(255,136,0,0.35),
+      -4px -4px 10px rgba(255,255,255,0.6),
+      0 0 0 4px rgba(255,136,0,0.12);
     transition: box-shadow 0.4s, transform 0.4s;
   }
 
@@ -237,21 +268,21 @@
     font-size: 0.52rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    opacity: 0.85;
+    opacity: 0.9;
     margin-top: 3px;
   }
 
   .portal.glow {
     box-shadow:
-      0 0 0 10px rgba(124,106,247,0.25),
-      0 0 60px rgba(124,106,247,0.60),
-      0 0 100px rgba(86,207,178,0.35);
+      0 0 0 10px rgba(255,136,0,0.25),
+      0 0 60px rgba(255,136,0,0.55),
+      0 0 100px rgba(255,160,64,0.35);
     transform: scale(1.12);
   }
 
   .portal-hint {
     font-size: 0.66rem;
-    color: #aaa;
+    color: var(--muted-light);
     max-width: 86px;
     text-align: center;
     line-height: 1.35;
@@ -264,7 +295,7 @@
     height: 23px;
     border-radius: 3px;
     background: #e63946;
-    box-shadow: 0 0 0 2px white, 0 0 0 3.5px #e63946;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px #e63946;
     z-index: 100;
     pointer-events: none;
     display: none;
@@ -279,10 +310,10 @@
     border-radius: 0 3px 0 0;
   }
   #flyingCv.transformed {
-    background: linear-gradient(135deg, #7c6af7, #56cfb2);
-    box-shadow: 0 0 0 2px white, 0 0 14px rgba(124,106,247,0.7);
+    background: linear-gradient(135deg, var(--accent), var(--accent-lt));
+    box-shadow: 0 0 0 2px var(--bg), 0 0 14px rgba(255,136,0,0.7);
   }
-  #flyingCv.transformed::after { background: rgba(255,255,255,0.35); }
+  #flyingCv.transformed::after { background: rgba(255,255,255,0.45); }
 
   /* ── Sparkles ── */
   .sparkle {
@@ -295,52 +326,61 @@
 
   /* ── Button ── */
   .btn {
-    background: linear-gradient(135deg, #7c6af7 0%, #56cfb2 100%);
+    background: var(--accent);
     color: white;
     border: none;
-    padding: 15px 36px;
-    border-radius: 50px;
+    padding: 16px 36px;
+    border-radius: 9999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(124,106,247,0.35);
-    transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
+    box-shadow: 6px 6px 14px rgba(255,136,0,0.35), -4px -4px 10px rgba(255,255,255,0.6);
+    transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s, background 0.18s;
     margin-bottom: 20px;
+    letter-spacing: 0.3px;
   }
   .btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(124,106,247,0.45);
+    background: var(--accent-lt);
+    box-shadow: 8px 8px 18px rgba(255,136,0,0.42), -6px -6px 12px rgba(255,255,255,0.65);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(0.5px);
+    box-shadow: inset 3px 3px 8px rgba(200,100,0,0.3), inset -2px -2px 6px rgba(255,255,255,0.2);
   }
   .btn:disabled { opacity: 0.55; cursor: default; }
 
   /* ── Result ── */
   .result {
-    background: linear-gradient(135deg, #f0fdf8 0%, #f5f0ff 100%);
-    border-left: 4px solid #7c6af7;
-    border-radius: 0 12px 12px 0;
-    padding: 14px 20px;
+    background: var(--bg);
+    border-left: none;
+    border-radius: 16px;
+    padding: 16px 22px;
     text-align: left;
     font-size: 0.88rem;
-    color: #333;
-    line-height: 1.55;
+    color: var(--fg);
+    line-height: 1.6;
     opacity: 0;
     transform: translateY(12px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     margin-bottom: 12px;
+    box-shadow: var(--sh-in);
   }
   .result.show { opacity: 1; transform: translateY(0); }
-  .result strong { color: #7c6af7; }
+  .result strong { color: var(--accent); font-weight: 700; }
 
   .reset-link {
     display: none;
     background: none;
     border: none;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.78rem;
-    color: #bbb;
+    color: var(--muted-light);
     cursor: pointer;
     text-decoration: underline;
   }
-  .reset-link:hover { color: #888; }
+  .reset-link:hover { color: var(--muted); }
 </style>
 </head>
 <body>
