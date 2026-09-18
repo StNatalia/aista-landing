@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AISTA — Неоновий шар</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   NEON LAYER — багаторазовий CSS/SVG-ефект
+   Світло будується з трьох рівнів:
+   1. ядро      — майже біле, тонке
+   2. ореол     — насичений колір
+   3. розсіяння — глибокий колір, великий радіус
+═══════════════════════════════════════════ */
+:root {
+  /* — керовані параметри — */
+  --neon-hue:   330;    /* відтінок 0–360            */
+  --k:          1;      /* сила світіння 0.3–2       */
+  --neon-speed: 3s;     /* період анімації           */
+
+  /* — похідні кольори — */
+  --neon:       hsl(var(--neon-hue) 100% 60%);
+  --neon-core:  hsl(var(--neon-hue) 100% 93%);
+  --neon-deep:  hsl(var(--neon-hue) 100% 46%);
+
+  /* — ланцюг світіння: кожен drop-shadow накладається на результат попереднього — */
+  --neon-bloom:
+    drop-shadow(0 0 calc(1px  * var(--k)) rgba(255,255,255,.95))
+    drop-shadow(0 0 calc(4px  * var(--k)) var(--neon-core))
+    drop-shadow(0 0 calc(10px * var(--k)) var(--neon))
+    drop-shadow(0 0 calc(22px * var(--k)) var(--neon))
+    drop-shadow(0 0 calc(44px * var(--k)) var(--neon-deep));
+
+  --neon-bloom-soft:
+    drop-shadow(0 0 calc(1px * var(--k)) rgba(255,255,255,.9))
+    drop-shadow(0 0 calc(3px * var(--k)) var(--neon-core));
+
+  /* — сторінка — */
+  --ink:     #0B0D12;
+  --ink-2:   #151821;
+  --line:    rgba(255,255,255,.09);
+  --txt:     #C9D0DE;
+  --txt-dim: #6E778C;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--ink);
+  color: var(--txt);
+  min-height: 100vh;
+  padding: 28px 20px 40px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; line-height: 1.2; letter-spacing: -.4px; }
+
+.shell { max-width: 1020px; margin: 0 auto; }
+
+/* ── HEADER ── */
+.head { text-align: center; margin-bottom: 30px; }
+.head h1 { font-size: clamp(22px, 4.5vw, 32px); color: #EDF1F8; margin-bottom: 8px; }
+.head p  { color: var(--txt-dim); font-size: 14px; max-width: 520px; margin: 0 auto; }
+
+/* ═══════════════════════════════════════════
+   ЕФЕКТ
+═══════════════════════════════════════════ */
+
+/* — 1. Текст — ореол на ::before, ядро на самому елементі — */
+.neon-text {
+  position: relative;
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  color: var(--neon-core);
+  letter-spacing: 6px;
+  filter: var(--neon-bloom-soft);
+}
+.neon-text::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--neon);
+  filter: var(--neon-bloom);
+  z-index: -1;
+}
+
+/* — 2. SVG-трубка — один <path> у <defs>, два <use> поверх — */
+.neon-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.neon-svg use { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tube-glow { stroke: var(--neon); stroke-width: 4.5; filter: var(--neon-bloom); }
+.tube-core { stroke: var(--neon-core); stroke-width: 1.6; filter: var(--neon-bloom-soft); }
+
+/* — 3. Накладання на зображення — mix-blend-mode робить світло світлом, а не наліпкою — */
+.neon-overlay { position: absolute; inset: 0; mix-blend-mode: var(--neon-blend, screen); pointer-events: none; }
+
+/* ── АНІМАЦІЇ ── */
+@keyframes neonBreathe      { 0%,100% { opacity: 1 } 50% { opacity: .5  } }
+@keyframes neonBreatheSoft  { 0%,100% { opacity: 1 } 50% { opacity: .78 } }
+
+/* нерівні відсотки = живе мерехтіння несправної трубки, а не рівний пульс */
+@keyframes neonFlicker {
+  0%, 12%, 14%, 40%, 42%, 44%, 71%, 88%, 100% { opacity: 1 }
+  13% { opacity: .30 }
+  41% { opacity: .16 }
+  43% { opacity: .60 }
+  70% { opacity: .26 }
+  87% { opacity: .44 }
+}
+@keyframes neonFlickerSoft {
+  0%, 12%, 14%, 40%, 42%, 44%, 71%, 88%, 100% { opacity: 1 }
+  13% { opacity: .62 }
+  41% { opacity: .50 }
+  43% { opacity: .82 }
+  70% { opacity: .58 }
+  87% { opacity: .70 }
+}
+/* запалювання — програється один раз, коли вивіска «вмикається» */
+@keyframes neonIgnite {
+  0%  { opacity: 0  }  8%  { opacity: 1  }  10% { opacity: .08 }
+  15% { opacity: .9 }  17% { opacity: .12 } 24% { opacity: 1   }
+  27% { opacity: .35 } 34%, 100% { opacity: 1 }
+}
+
+/* режими вмикаються атрибутом на контейнері */
+[data-mode="breathe"] .tube-glow,
+[data-mode="breathe"] .neon-text::before { animation: neonIgnite 1.5s linear both, neonBreathe var(--neon-speed) ease-in-out 1.5s infinite; }
+[data-mode="breathe"] .tube-core,
+[data-mode="breathe"] .neon-text         { animation: neonIgnite 1.5s linear both, neonBreatheSoft var(--neon-speed) ease-in-out 1.5s infinite; }
+
+[data-mode="flicker"] .tube-glow,
+[data-mode="flicker"] .neon-text::before { animation: neonIgnite 1.5s linear both, neonFlicker var(--neon-speed) linear 1.5s infinite; }
+[data-mode="flicker"] .tube-core,
+[data-mode="flicker"] .neon-text         { animation: neonIgnite 1.5s linear both, neonFlickerSoft var(--neon-speed) linear 1.5s infinite; }
+
+/* вимкнена вивіска — трубка є, світла немає */
+[data-mode="off"] .tube-glow { opacity: 0 }
+[data-mode="off"] .tube-core { stroke: #2C313D; filter: none }
+[data-mode="off"] .neon-text { color: #2C313D; filter: none }
+[data-mode="off"] .neon-text::before { opacity: 0 }
+[data-mode="off"] .neon-overlay { opacity: .12 }
+
+@media (prefers-reduced-motion: reduce) {
+  .tube-glow, .tube-core, .neon-text, .neon-text::before { animation: none !important; }
+}
+
+/* ═══════════════════════════════════════════
+   ДЕМО-СТЕНД
+═══════════════════════════════════════════ */
+.lab { display: grid; grid-template-columns: 1fr 268px; gap: 20px; align-items: start; }
+@media (max-width: 800px) { .lab { grid-template-columns: 1fr } }
+
+.stage { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 560px) { .stage { grid-template-columns: 1fr } }
+
+.tile {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 26px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 210px;
+  position: relative;
+  overflow: hidden;
+}
+.tile-lbl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--txt-dim);
+}
+.tile--wide { grid-column: 1 / -1; }
+.shape { width: 118px; }
+
+/* «фото» для демонстрації накладання — без зовнішніх файлів */
+.photo {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 20% 15%, #2A3550 0%, transparent 60%),
+    radial-gradient(90% 70% at 85% 25%, #4A3A56 0%, transparent 55%),
+    linear-gradient(180deg, #1B2233 0%, #2E2A38 55%, #3A3038 100%);
+}
+.photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.45) 100%);
+}
+.photo .neon-svg { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; }
+
+/* ── ПАНЕЛЬ КЕРУВАННЯ ── */
+.panel { background: var(--ink-2); border: 1px solid var(--line); border-radius: 20px; padding: 20px; position: sticky; top: 20px; }
+.panel h2 { font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--txt-dim); margin-bottom: 18px; font-weight: 700; }
+.ctl { margin-bottom: 18px; }
+.ctl-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.ctl-name { font-size: 13px; color: var(--txt); }
+.ctl-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 700; color: var(--neon); }
+
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: #262B37; outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--neon); cursor: pointer; box-shadow: 0 0 10px var(--neon); border: none; }
+input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border: none; border-radius: 50%; background: var(--neon); cursor: pointer; box-shadow: 0 0 10px var(--neon); }
+#hue { background: linear-gradient(90deg, hsl(0 100% 60%), hsl(60 100% 60%), hsl(120 100% 60%), hsl(180 100% 60%), hsl(240 100% 60%), hsl(300 100% 60%), hsl(360 100% 60%)); }
+
+.seg { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.seg button {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--txt-dim);
+  background: #1D212B;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 8px 4px;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
+}
+.seg button:hover { color: var(--txt); }
+.seg button[aria-pressed="true"] { color: var(--neon-core); border-color: var(--neon); background: hsl(var(--neon-hue) 60% 60% / .12); }
+
+/* ── ВИВІД CSS ── */
+.out { margin-top: 20px; background: var(--ink-2); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.out-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.out-top span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--txt-dim); }
+.copy { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--neon-core); background: hsl(var(--neon-hue) 60% 60% / .14); border: 1px solid var(--neon); border-radius: 8px; padding: 7px 14px; cursor: pointer; transition: background .2s ease; }
+.copy:hover { background: hsl(var(--neon-hue) 60% 60% / .26); }
+pre { padding: 18px; overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; line-height: 1.75; color: #9FB0CC; }
+
+.note { margin-top: 20px; color: var(--txt-dim); font-size: 13px; line-height: 1.8; }
+.note b { color: var(--txt); font-weight: 700; }
+.note code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--neon); }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="head">
+    <h1>Неоновий шар</h1>
+    <p>Світіння живе в окремому шарі: жодного редагування самого зображення — тільки CSS і SVG поверх нього.</p>
+  </div>
+
+  <div class="lab">
+
+    <!-- ── СТЕНД ── -->
+    <div class="stage" id="stage" data-mode="breathe">
+
+      <div class="tile">
+        <span class="neon-text" data-text="AISTA" style="font-size:34px">AISTA</span>
+        <span class="tile-lbl">Текст</span>
+      </div>
+
+      <div class="tile">
+        <svg class="neon-svg shape" viewBox="-14 -14 128 128" aria-hidden="true">
+          <defs>
+            <path id="sHeart" d="M50 88C50 88 8 59 8 33 8 17 20 8 32 8c9 0 15 5 18 10 3-5 9-10 18-10 12 0 24 9 24 25 0 26-42 55-42 55Z"/>
+          </defs>
+          <use href="#sHeart" class="tube-glow"/>
+          <use href="#sHeart" class="tube-core"/>
+        </svg>
+        <span class="tile-lbl">Контур</span>
+      </div>
+
+      <div class="tile">
+        <svg class="neon-svg shape" viewBox="-14 -14 128 128" aria-hidden="true">
+          <defs>
+            <path id="sDoc" d="M26 6h34l22 22v66a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4ZM60 6v22h22M36 52h28M36 64h28M36 76h18"/>
+          </defs>
+          <use href="#sDoc" class="tube-glow"/>
+          <use href="#sDoc" class="tube-core"/>
+        </svg>
+        <span class="tile-lbl">Іконка</span>
+      </div>
+
+      <div class="tile">
+        <svg class="neon-svg shape" viewBox="-14 -14 128 128" aria-hidden="true">
+          <defs>
+            <path id="sRing" d="M50 6a44 44 0 1 1 0 88 44 44 0 0 1 0-88ZM31 51l13 14 25-28"/>
+          </defs>
+          <use href="#sRing" class="tube-glow"/>
+          <use href="#sRing" class="tube-core"/>
+        </svg>
+        <span class="tile-lbl">Значок</span>
+      </div>
+
+      <div class="tile tile--wide">
+        <div class="photo">
+          <svg class="neon-svg neon-overlay" viewBox="0 0 400 300" aria-hidden="true">
+            <defs>
+              <path id="sArc" d="M56 214c34-96 106-152 172-152 44 0 88 22 116 62"/>
+            </defs>
+            <use href="#sArc" class="tube-glow"/>
+            <use href="#sArc" class="tube-core"/>
+          </svg>
+        </div>
+        <span class="tile-lbl">Накладання поверх зображення · mix-blend-mode</span>
+      </div>
+
+    </div>
+
+    <!-- ── КЕРУВАННЯ ── -->
+    <aside class="panel">
+      <h2>Параметри</h2>
+
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-name">Відтінок</span><span class="ctl-val" id="vHue">330</span></div>
+        <input type="range" id="hue" min="0" max="360" step="1" value="330">
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-name">Сила світіння</span><span class="ctl-val" id="vK">1.00</span></div>
+        <input type="range" id="k" min="0.3" max="2" step="0.05" value="1">
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-name">Швидкість</span><span class="ctl-val" id="vSpeed">3.0s</span></div>
+        <input type="range" id="speed" min="0.6" max="8" step="0.1" value="3">
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-top"><span class="ctl-name">Режим</span></div>
+        <div class="seg" id="mode">
+          <button data-v="breathe" aria-pressed="true">Пульс</button>
+          <button data-v="flicker" aria-pressed="false">Мерехтіння</button>
+          <button data-v="steady"  aria-pressed="false">Рівно</button>
+          <button data-v="off"     aria-pressed="false">Вимкнено</button>
+        </div>
+      </div>
+
+      <div class="ctl" style="margin-bottom:0">
+        <div class="ctl-top"><span class="ctl-name">Змішування</span></div>
+        <div class="seg" id="blend">
+          <button data-v="screen"       aria-pressed="true">Screen</button>
+          <button data-v="plus-lighter" aria-pressed="false">Lighter</button>
+          <button data-v="normal"       aria-pressed="false">Normal</button>
+          <button data-v="overlay"      aria-pressed="false">Overlay</button>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ── ВИВІД ── -->
+  <div class="out">
+    <div class="out-top">
+      <span>Готовий CSS</span>
+      <button class="copy" id="copy">Копіювати</button>
+    </div>
+    <pre id="css"></pre>
+  </div>
+
+  <p class="note">
+    <b>Як застосувати до власного зображення.</b> Поклади PNG із прозорим тлом (або <code>&lt;path&gt;</code>) у контейнер
+    з <code>position:relative</code>, додай йому клас <code>.neon-overlay</code> — і ланцюг <code>drop-shadow</code>
+    обведе світлом саме непрозорі пікселі. <code>mix-blend-mode:screen</code> змушує шар читатися як справжнє світло,
+    а не як наліпка. Анімація рухає лише <code>opacity</code>, тож ефект працює на композиторі й не гальмує сторінку.
+  </p>
+
+</div>
+
+<script>
+(function () {
+  var root  = document.documentElement;
+  var stage = document.getElementById('stage');
+  var out   = document.getElementById('css');
+
+  var state = { hue: 330, k: 1, speed: 3, mode: 'breathe', blend: 'screen' };
+
+  function render() {
+    root.style.setProperty('--neon-hue', state.hue);
+    root.style.setProperty('--k', state.k);
+    root.style.setProperty('--neon-speed', state.speed + 's');
+    root.style.setProperty('--neon-blend', state.blend);
+    stage.setAttribute('data-mode', state.mode);
+
+    document.getElementById('vHue').textContent   = state.hue;
+    document.getElementById('vK').textContent     = state.k.toFixed(2);
+    document.getElementById('vSpeed').textContent = state.speed.toFixed(1) + 's';
+
+    out.textContent = snippet();
+  }
+
+  function snippet() {
+    var anim = {
+      breathe: 'neonBreathe var(--neon-speed) ease-in-out infinite',
+      flicker: 'neonFlicker var(--neon-speed) linear infinite',
+      steady:  'none',
+      off:     'none'
+    }[state.mode];
+
+    return ':root {\n' +
+      '  --neon-hue:   ' + state.hue + ';\n' +
+      '  --k:          ' + state.k.toFixed(2) + ';\n' +
+      '  --neon-speed: ' + state.speed.toFixed(1) + 's;\n' +
+      '  --neon:      hsl(var(--neon-hue) 100% 60%);\n' +
+      '  --neon-core: hsl(var(--neon-hue) 100% 93%);\n' +
+      '  --neon-deep: hsl(var(--neon-hue) 100% 46%);\n' +
+      '}\n\n' +
+      '.neon-overlay {\n' +
+      '  filter:\n' +
+      '    drop-shadow(0 0 calc(1px  * var(--k)) rgba(255,255,255,.95))\n' +
+      '    drop-shadow(0 0 calc(4px  * var(--k)) var(--neon-core))\n' +
+      '    drop-shadow(0 0 calc(10px * var(--k)) var(--neon))\n' +
+      '    drop-shadow(0 0 calc(22px * var(--k)) var(--neon))\n' +
+      '    drop-shadow(0 0 calc(44px * var(--k)) var(--neon-deep));\n' +
+      '  mix-blend-mode: ' + state.blend + ';\n' +
+      '  animation: ' + anim + ';\n' +
+      '}\n\n' +
+      '@keyframes neonBreathe { 0%,100% { opacity:1 } 50% { opacity:.5 } }\n\n' +
+      '@keyframes neonFlicker {\n' +
+      '  0%,12%,14%,40%,42%,44%,71%,88%,100% { opacity:1 }\n' +
+      '  13% { opacity:.30 }  41% { opacity:.16 }  43% { opacity:.60 }\n' +
+      '  70% { opacity:.26 }  87% { opacity:.44 }\n' +
+      '}';
+  }
+
+  function bindRange(id, key, cast) {
+    document.getElementById(id).addEventListener('input', function (e) {
+      state[key] = cast(e.target.value);
+      render();
+    });
+  }
+  bindRange('hue',   'hue',   function (v) { return parseInt(v, 10); });
+  bindRange('k',     'k',     parseFloat);
+  bindRange('speed', 'speed', parseFloat);
+
+  function bindSeg(id, key) {
+    var group = document.getElementById(id);
+    group.addEventListener('click', function (e) {
+      var btn = e.target.closest('button');
+      if (!btn) return;
+      state[key] = btn.dataset.v;
+      group.querySelectorAll('button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+      render();
+    });
+  }
+  bindSeg('mode',  'mode');
+  bindSeg('blend', 'blend');
+
+  document.getElementById('copy').addEventListener('click', function (e) {
+    navigator.clipboard.writeText(snippet()).then(function () {
+      var b = e.target;
+      b.textContent = 'Скопійовано';
+      setTimeout(function () { b.textContent = 'Копіювати'; }, 1600);
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
